@@ -1,8 +1,15 @@
 package oppgave2;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Kunde extends Thread {
+	
+	private ArrayList<String> bestillinger;
+	
+	public Kunde(ArrayList<String> bestillinger) {
+		this.bestillinger = bestillinger;
+	}
 	
 	@Override
 	public void run() {
@@ -13,7 +20,10 @@ public class Kunde extends Thread {
 				Thread.sleep(tall);
 			} catch (InterruptedException e) {}
 			
-			notifyAll();
+			synchronized(bestillinger) {
+				bestillinger.add("");
+				bestillinger.notifyAll();
+			}
 		}
 	}
 

@@ -1,16 +1,19 @@
 package oppgave2;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Kokk extends Thread {
 	
 	private Rutsjebane rb;
 	private Kunde k;
+	private ArrayList<String> bestillinger;
 	
-	public Kokk(Rutsjebane rb, Kunde k) {
+	public Kokk(Rutsjebane rb, Kunde k, ArrayList<String> bestillinger) {
 		super();
 		this.rb = rb;
 		this.k = k;
+		this.bestillinger = bestillinger;
 	}
 	
 	@Override
@@ -21,9 +24,13 @@ public class Kokk extends Thread {
 		
 		synchronized(rb) {
 			while(true) {
-				try {
-					k.wait();
-				} catch (InterruptedException e1) {}
+				while(bestillinger.isEmpty()) {
+					synchronized(bestillinger) {
+						try {
+							bestillinger.wait();
+						} catch (InterruptedException e) {}
+					}
+				}
 				
 				long tall = (long)((r.nextInt(4) + 2) * 1000);
 				try {
@@ -40,6 +47,7 @@ public class Kokk extends Thread {
 				}
 				
 				rb.leggTil(b);
+				rb.skrivUt();
 				rb.notifyAll();
 				
 				antall++;
