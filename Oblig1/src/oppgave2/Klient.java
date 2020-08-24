@@ -6,20 +6,18 @@ public class Klient {
 
 	public static void main(String[] args) {
 		
+		Object kokkLock = new Object();
+		Object servitorLock = new Object();
 		Rutsjebane rb = new Rutsjebane(5);
 		
 		ArrayList<String> bestillinger = new ArrayList<String>();
 		
-		Kunde k = new Kunde(bestillinger);
+		Kokk kokk1 = new Kokk("Kokk1", rb, bestillinger, kokkLock, servitorLock);
+		Kokk kokk2 = new Kokk("Kokk2", rb, bestillinger, kokkLock, servitorLock);
+		Kokk kokk3 = new Kokk("Kokk3", rb, bestillinger, kokkLock, servitorLock);
 		
-		Kokk kokk1 = new Kokk(rb, k, bestillinger);
-		Kokk kokk2 = new Kokk(rb, k, bestillinger);
-		Kokk kokk3 = new Kokk(rb, k, bestillinger);
-		
-		Servitor servitor1 = new Servitor(rb);
-		Servitor servitor2 = new Servitor(rb);
-		
-		k.start();
+		Servitor servitor1 = new Servitor("Servitør1", rb, bestillinger, kokkLock, servitorLock);
+		Servitor servitor2 = new Servitor("Servitør2", rb, bestillinger, kokkLock, servitorLock);
 		kokk1.start();
 		kokk2.start();
 		kokk3.start();

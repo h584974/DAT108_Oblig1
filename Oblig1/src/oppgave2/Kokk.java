@@ -6,14 +6,16 @@ import java.util.Random;
 public class Kokk extends Thread {
 	
 	private Rutsjebane rb;
-	private Kunde k;
 	private ArrayList<String> bestillinger;
+	private Object kokkLock;
+	private Object servitorLock;
 	
-	public Kokk(Rutsjebane rb, Kunde k, ArrayList<String> bestillinger) {
-		super();
+	public Kokk(String navn, Rutsjebane rb, ArrayList<String> bestillinger, Object kokkLock, Object servitorLock) {
+		super(navn);
 		this.rb = rb;
-		this.k = k;
 		this.bestillinger = bestillinger;
+		this.kokkLock = kokkLock;
+		this.servitorLock = servitorLock;
 	}
 	
 	@Override
@@ -21,6 +23,7 @@ public class Kokk extends Thread {
 		int antall = 0;
 		Burger b = null;
 		Random r = new Random();
+		System.out.println(getName() + " har startet å jobbe");
 		
 		synchronized(rb) {
 			while(true) {
@@ -32,6 +35,10 @@ public class Kokk extends Thread {
 					}
 				}
 				
+				System.out.println(getName() + "har mottatt bestilling");
+				
+				bestillinger.remove(0);
+				
 				long tall = (long)((r.nextInt(4) + 2) * 1000);
 				try {
 					Thread.sleep(tall);
@@ -42,13 +49,17 @@ public class Kokk extends Thread {
 				
 				while(rb.erFull()) {
 					try {
-						rb.wait();
+						synchronized(kokkLock) {
+							kokkLock.wait();
+						}
 					} catch (InterruptedException e) {}
 				}
 				
 				rb.leggTil(b);
 				rb.skrivUt();
-				rb.notifyAll();
+				synchronized(servitorLock) {
+					servitorLock.notifyAll();
+				}
 				
 				antall++;
 			}
