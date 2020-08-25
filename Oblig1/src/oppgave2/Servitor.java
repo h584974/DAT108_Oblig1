@@ -34,6 +34,7 @@ public class Servitor extends Thread {
 			synchronized(bestillinger) {
 				bestillinger.add("");
 				bestillinger.notifyAll();
+				System.out.println("Bestillinger som venter: " + bestillinger.size());
 			}
 			
 			while(rb.erTom()) {

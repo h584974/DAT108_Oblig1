@@ -26,27 +26,30 @@ public class Kokk extends Thread {
 		Random r = new Random();
 		System.out.println(getName() + " har startet å jobbe");
 		
-		synchronized(rb) {
-			while(true) {
-				while(bestillinger.isEmpty()) {
-					synchronized(bestillinger) {
-						try {
-							bestillinger.wait();
-						} catch (InterruptedException e) {}
-					}
+		while(true) {
+			while(bestillinger.isEmpty()) {
+				synchronized(bestillinger) {
+					try {
+						bestillinger.wait();
+					} catch (InterruptedException e) {}
 				}
-				
+			}
+			
+			synchronized(bestillinger) {
 				bestillinger.remove(0);
+			}
 				
-				long tall = (long)((r.nextInt(4) + 2.5) * 1000);
-				try {
-					Thread.sleep(tall);
-				} catch (InterruptedException e) {}
+			long tall = (long)((r.nextInt(4) + 2.5) * 1000);
+			try {
+				System.out.println(getName() + " lager hamburger i " + tall/1000 + " sekunder");
+				Thread.sleep(tall);
+			} catch (InterruptedException e) {}
 				
 				
-				b = new Burger(burgerID.getId());
-				burgerID.setId(burgerID.getId() + 1);
+			b = new Burger(burgerID.getId());
+			burgerID.setId(burgerID.getId() + 1);
 				
+			synchronized(rb) {
 				while(rb.erFull()) {
 					try {
 						synchronized(kokkLock) {
@@ -61,7 +64,6 @@ public class Kokk extends Thread {
 				synchronized(servitorLock) {
 					servitorLock.notify();
 				}
-				
 			}
 		}
 	}
