@@ -28,7 +28,8 @@ public class Servitor extends Thread {
 			try {
 				System.out.println(getName() + " tar bestilling i " + tall/1000 + " sekunder");
 				Thread.sleep(tall);
-			} catch (InterruptedException e) {System.out.println("SERVITØR FORSTYRRET!!");}
+			} 
+			catch (InterruptedException e) {}
 			
 			synchronized(bestillinger) {
 				bestillinger.add("");
