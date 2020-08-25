@@ -42,19 +42,20 @@ public class Rutsjebane {
 		return null;
 	}
 	
-	public void skrivUt() {
+	public String toString() {
 		if(!erTom()) {
-			String s = "{(";
+			String s = "[ (";
 			for(int i = foran; i < antall + foran; i++) {
 				if(i >= antall - 1) {
-					s += burgere[i % burgere.length].getNr() + ")}";
+					s += burgere[i % burgere.length].getNr() + ") ]";
 				}
 				else {
 					s += burgere[i % burgere.length].getNr() + "), (";
 				}
 			}
-			System.out.println(s);
+			return s;
 		}
+		return "[]";
 	}
 
 }

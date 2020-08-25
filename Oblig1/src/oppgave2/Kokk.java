@@ -9,18 +9,19 @@ public class Kokk extends Thread {
 	private ArrayList<String> bestillinger;
 	private Object kokkLock;
 	private Object servitorLock;
+	private BurgerID burgerID;
 	
-	public Kokk(String navn, Rutsjebane rb, ArrayList<String> bestillinger, Object kokkLock, Object servitorLock) {
+	public Kokk(String navn, Rutsjebane rb, ArrayList<String> bestillinger, Object kokkLock, Object servitorLock, BurgerID burgerID) {
 		super(navn);
 		this.rb = rb;
 		this.bestillinger = bestillinger;
 		this.kokkLock = kokkLock;
 		this.servitorLock = servitorLock;
+		this.burgerID = burgerID;
 	}
 	
 	@Override
 	public void run() {
-		int antall = 0;
 		Burger b = null;
 		Random r = new Random();
 		System.out.println(getName() + " har startet å jobbe");
@@ -35,33 +36,32 @@ public class Kokk extends Thread {
 					}
 				}
 				
-				System.out.println(getName() + "har mottatt bestilling");
-				
 				bestillinger.remove(0);
 				
-				long tall = (long)((r.nextInt(4) + 2) * 1000);
+				long tall = (long)((r.nextInt(4) + 2.5) * 1000);
 				try {
 					Thread.sleep(tall);
 				} catch (InterruptedException e) {}
 				
 				
-				b = new Burger(antall);
+				b = new Burger(burgerID.getId());
+				burgerID.setId(burgerID.getId());
 				
 				while(rb.erFull()) {
 					try {
 						synchronized(kokkLock) {
+							System.out.println("### " + getName() + " vil legge en hamburger på rutsjebanen, men den er full. Venter! ###");
 							kokkLock.wait();
 						}
 					} catch (InterruptedException e) {}
 				}
 				
 				rb.leggTil(b);
-				rb.skrivUt();
+				System.out.println(getName() + " legger på en hamburger   (" + b.getNr() + ")   =>   " + rb.toString());
 				synchronized(servitorLock) {
 					servitorLock.notifyAll();
 				}
 				
-				antall++;
 			}
 		}
 	}

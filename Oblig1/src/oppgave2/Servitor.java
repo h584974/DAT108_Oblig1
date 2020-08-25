@@ -24,26 +24,28 @@ public class Servitor extends Thread {
 		System.out.println(getName() + " har startet å jobbe");
 			
 		while(true) {
-			long tall = (long)((r.nextInt(4) + 2) * 1000);
+			long tall = (long)((r.nextInt(4) + 2.5) * 1000);
 			try {
+				System.out.println(getName() + " tar bestilling i " + tall/1000 + " sekunder");
 				Thread.sleep(tall);
-			} catch (InterruptedException e) {}
+			} catch (InterruptedException e) {System.out.println("SERVITØR FORSTYRRET!!");}
 			
 			synchronized(bestillinger) {
-				bestillinger.add("1");
+				bestillinger.add("");
 				bestillinger.notifyAll();
-				System.out.println("Bestilling sendt");
 			}
 			
 			while(rb.erTom()) {
 				try {
 					synchronized(servitorLock) {
+						System.out.println("### " + getName() + " vil ta en hamburger, men rutsjebanen er tom. Venter! ###");
 						servitorLock.wait();
 					}
 				} catch (InterruptedException e) {}
 			}
 			
-			System.out.println(rb.taUt().getNr());
+			Burger b = rb.taUt();
+			System.out.println(getName() + " tar av en hamburger   (" + b.getNr() + ")   =>   " + rb.toString());
 			synchronized(kokkLock) {
 				kokkLock.notifyAll();
 			}
