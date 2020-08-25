@@ -45,7 +45,7 @@ public class Kokk extends Thread {
 				
 				
 				b = new Burger(burgerID.getId());
-				burgerID.setId(burgerID.getId());
+				burgerID.setId(burgerID.getId() + 1);
 				
 				while(rb.erFull()) {
 					try {
@@ -59,7 +59,7 @@ public class Kokk extends Thread {
 				rb.leggTil(b);
 				System.out.println(getName() + " legger på en hamburger   (" + b.getNr() + ")   =>   " + rb.toString());
 				synchronized(servitorLock) {
-					servitorLock.notifyAll();
+					servitorLock.notify();
 				}
 				
 			}

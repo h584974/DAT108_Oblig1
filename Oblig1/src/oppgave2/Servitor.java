@@ -47,7 +47,7 @@ public class Servitor extends Thread {
 			Burger b = rb.taUt();
 			System.out.println(getName() + " tar av en hamburger   (" + b.getNr() + ")   =>   " + rb.toString());
 			synchronized(kokkLock) {
-				kokkLock.notifyAll();
+				kokkLock.notify();
 			}
 		}
 	}
