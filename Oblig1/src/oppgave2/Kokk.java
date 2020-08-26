@@ -27,15 +27,14 @@ public class Kokk extends Thread {
 		System.out.println(getName() + " har startet å jobbe");
 		
 		while(true) {
-			while(bestillinger.isEmpty()) {
-				synchronized(bestillinger) {
+			
+			synchronized(bestillinger) {
+				while(bestillinger.isEmpty()) {
 					try {
 						bestillinger.wait();
 					} catch (InterruptedException e) {}
 				}
-			}
 			
-			synchronized(bestillinger) {
 				bestillinger.remove(0);
 			}
 				
