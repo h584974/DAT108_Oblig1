@@ -34,7 +34,6 @@ public class Servitor extends Thread {
 			synchronized(bestillinger) {
 				bestillinger.add("");
 				bestillinger.notifyAll();
-				System.out.println("Bestillinger som venter: " + bestillinger.size());
 			}
 			
 			while(rb.erTom()) {
@@ -48,6 +47,7 @@ public class Servitor extends Thread {
 			
 			Burger b = rb.taUt();
 			System.out.println(getName() + " tar av en hamburger   (" + b.getNr() + ")   =>   " + rb.toString());
+			
 			synchronized(kokkLock) {
 				kokkLock.notify();
 			}
