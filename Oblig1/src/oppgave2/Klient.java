@@ -1,7 +1,5 @@
 package oppgave2;
 
-import java.util.ArrayList;
-
 public class Klient {
 
 	public static void main(String[] args) {
