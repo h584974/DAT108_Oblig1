@@ -1,20 +1,15 @@
 package oppgave2;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Kokk extends Thread {
 	
 	private Rutsjebane rb;
-	private Object kokkLock;
-	private Object servitorLock;
 	private BurgerID burgerID;
 	
-	public Kokk(String navn, Rutsjebane rb, Object kokkLock, Object servitorLock, BurgerID burgerID) {
+	public Kokk(String navn, Rutsjebane rb, BurgerID burgerID) {
 		super(navn);
 		this.rb = rb;;
-		this.kokkLock = kokkLock;
-		this.servitorLock = servitorLock;
 		this.burgerID = burgerID;
 	}
 	

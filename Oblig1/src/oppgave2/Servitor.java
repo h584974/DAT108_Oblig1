@@ -5,14 +5,10 @@ import java.util.Random;
 public class Servitor extends Thread {
 	
 	private Rutsjebane rb;
-	private Object servitorLock;
-	private Object kokkLock;
 	
-	public Servitor(String navn, Rutsjebane rb, Object kokkLock, Object servitorLock) {
+	public Servitor(String navn, Rutsjebane rb) {
 		super(navn);
 		this.rb = rb;
-		this.kokkLock = kokkLock;
-		this.servitorLock = servitorLock;
 	}
 	
 	@Override
