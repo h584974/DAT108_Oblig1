@@ -12,14 +12,12 @@ public class Klient {
 		Object servitorLock = new Object();
 		Rutsjebane rb = new Rutsjebane(5);
 		
-		ArrayList<String> bestillinger = new ArrayList<String>();
+		Kokk kokk1 = new Kokk("Kokk1", rb, kokkLock, servitorLock, id);
+		Kokk kokk2 = new Kokk("Kokk2", rb, kokkLock, servitorLock, id);
+		Kokk kokk3 = new Kokk("Kokk3", rb, kokkLock, servitorLock, id);
 		
-		Kokk kokk1 = new Kokk("Kokk1", rb, bestillinger, kokkLock, servitorLock, id);
-		Kokk kokk2 = new Kokk("Kokk2", rb, bestillinger, kokkLock, servitorLock, id);
-		Kokk kokk3 = new Kokk("Kokk3", rb, bestillinger, kokkLock, servitorLock, id);
-		
-		Servitor servitor1 = new Servitor("Servitør1", rb, bestillinger, kokkLock, servitorLock);
-		Servitor servitor2 = new Servitor("Servitør2", rb, bestillinger, kokkLock, servitorLock);
+		Servitor servitor1 = new Servitor("Servitør1", rb, kokkLock, servitorLock);
+		Servitor servitor2 = new Servitor("Servitør2", rb, kokkLock, servitorLock);
 		kokk1.start();
 		kokk2.start();
 		kokk3.start();
