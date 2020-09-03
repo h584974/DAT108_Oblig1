@@ -28,11 +28,9 @@ public class Servitor extends Thread {
 			
 			try {
 				b = queue.take();
-				// System.out.println("### " + getName() + " vil ta en hamburger, men rutsjebanen er tom. Venter! ###");
+				System.out.println(getName() + " tar av en hamburger   (" + b.getNr() + ")   =>   " + queue.toString());
 			}
-			catch (InterruptedException e) {}
-			
-			System.out.println(getName() + " tar av en hamburger   (" + b.getNr() + ")   =>   " + queue.toString());
+			catch (InterruptedException e) {}	
 			
 		}
 	}

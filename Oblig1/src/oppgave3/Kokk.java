@@ -33,11 +33,10 @@ public class Kokk extends Thread {
 				
 			try {
 				queue.put(b);
-				// System.out.println("### " + getName() + " vil legge en hamburger på rutsjebanen, men den er full. Venter! ###");
+				System.out.println(getName() + " legger på en hamburger   (" + b.getNr() + ")   =>   " + queue.toString());
 			}
 			catch (InterruptedException e) {}
 				
-			System.out.println(getName() + " legger på en hamburger   (" + b.getNr() + ")   =>   " + queue.toString());
 		}
 	}
 
