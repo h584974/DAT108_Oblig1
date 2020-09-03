@@ -33,7 +33,8 @@ public class Kokk extends Thread {
 				
 			try {
 				queue.put(b);
-				System.out.println(getName() + " legger på en hamburger   (" + b.getNr() + ")   =>   " + queue.toString());
+				String s = queue.toString();
+				System.out.println(getName() + " legger på en hamburger   (" + b.getNr() + ")   =>   " + s);
 			}
 			catch (InterruptedException e) {}
 				

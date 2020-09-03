@@ -28,7 +28,8 @@ public class Servitor extends Thread {
 			
 			try {
 				b = queue.take();
-				System.out.println(getName() + " tar av en hamburger   (" + b.getNr() + ")   =>   " + queue.toString());
+				String s = queue.toString();
+				System.out.println(getName() + " tar av en hamburger   (" + b.getNr() + ")   =>   " + s);
 			}
 			catch (InterruptedException e) {}	
 			
